@@ -1,0 +1,289 @@
+/* ---------------------------------------------------------
+   Design tokens
+--------------------------------------------------------- */
+:root {
+  --bg: #eef3f1;
+  --surface: #ffffff;
+  --ink: #16211f;
+  --muted: #5b6b68;
+  --border: rgba(22, 33, 31, 0.09);
+  --shadow: rgba(22, 33, 31, 0.10);
+
+  --accent-day: #d9922f;
+  --accent-rain: #3e7ca6;
+  --accent-night: #6c63a6;
+
+  /* set by JS to reflect time-of-day + weather */
+  --horizon-a: var(--accent-day);
+  --horizon-b: var(--accent-night);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0e1614;
+  --surface: #161f1d;
+  --ink: #edf3f1;
+  --muted: #93a8a4;
+  --border: rgba(237, 243, 241, 0.10);
+  --shadow: rgba(0, 0, 0, 0.45);
+
+  --accent-day: #e8a94a;
+  --accent-rain: #5b9bc7;
+  --accent-night: #8b81c9;
+
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   Base
+--------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* ---------------------------------------------------------
+   Panel (the instrument card)
+--------------------------------------------------------- */
+.panel {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px -24px var(--shadow);
+  animation: rise 0.6s ease both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.horizon {
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--horizon-a), var(--horizon-b));
+  transition: background 1.2s ease;
+}
+
+.panel__body {
+  padding: 36px 32px 28px;
+}
+
+/* ---------------------------------------------------------
+   Type
+--------------------------------------------------------- */
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.clock {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(48px, 12vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.date {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 24px 0 20px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.row--location {
+  margin-bottom: 22px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--horizon-a);
+  flex: none;
+  transition: background 1.2s ease;
+}
+
+.row__label {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+}
+
+.row__value {
+  color: var(--ink);
+  margin-left: auto;
+  text-align: right;
+}
+
+/* ---------------------------------------------------------
+   Weather block
+--------------------------------------------------------- */
+.weather {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.weather__icon {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--horizon-a);
+  transition: color 1.2s ease;
+}
+
+.weather__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.weather__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.weather__temp {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.weather__condition {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.weather__humidity {
+  flex: none;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.weather__humidity-value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.weather__humidity-label {
+  font-size: 10.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.footnote {
+  margin: 22px 0 0;
+  font-size: 10.5px;
+  color: var(--muted);
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* ---------------------------------------------------------
+   Theme toggle
+--------------------------------------------------------- */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.4s ease, border-color 0.4s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.06);
+}
+
+.theme-toggle:focus-visible,
+.panel:focus-visible {
+  outline: 2px solid var(--accent-rain);
+  outline-offset: 2px;
+}
+
+.theme-toggle__icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 6px -6px 0 -3px var(--ink);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+[data-theme="dark"] .theme-toggle__icon {
+  background: transparent;
+  box-shadow: inset -4px -2px 0 0 var(--ink);
+}
+
+/* ---------------------------------------------------------
+   Responsive
+--------------------------------------------------------- */
+@media (max-width: 420px) {
+  .panel__body {
+    padding: 30px 22px 24px;
+  }
+}

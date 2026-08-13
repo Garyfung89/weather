@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Right Now</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle light / dark">
+    <span class="theme-toggle__icon" aria-hidden="true"></span>
+  </button>
+
+  <main class="panel" id="panel">
+    <div class="horizon" aria-hidden="true"></div>
+
+    <div class="panel__body">
+      <p class="eyebrow" id="greeting">Right now</p>
+
+      <h1 class="clock" id="clock">--:--</h1>
+      <p class="date" id="date">Loading date&hellip;</p>
+
+      <div class="divider"></div>
+
+      <div class="row row--location">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="row__label">Location</span>
+        <span class="row__value" id="location">Locating&hellip;</span>
+      </div>
+
+      <div class="weather" id="weather">
+        <div class="weather__icon" id="weather-icon" aria-hidden="true"></div>
+        <div class="weather__main">
+          <div class="weather__temp" id="temp">&mdash;&deg;</div>
+          <div class="weather__condition" id="condition">Fetching weather&hellip;</div>
+        </div>
+        <div class="weather__humidity">
+          <span class="weather__humidity-value" id="humidity">&mdash;%</span>
+          <span class="weather__humidity-label">Humidity</span>
+        </div>
+      </div>
+
+      <p class="footnote" id="updated">&nbsp;</p>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
